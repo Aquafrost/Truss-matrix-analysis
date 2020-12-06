@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Matrix Stiffness Analysis</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+        <script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js></script>
+        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+        <!-- <script src="math.js"></script>  -->
+        
+    </head>
+    <body>
+<!-- Headings -->
+        <div id="main-heading">
+            <h1>Matrix Stiffness Analysis</h1>
+            <h4>for Trusses</h4>
+        </div>
+        
+        <hr>
+<!-- navigation for input; analysis and output -->
+        <div id="main-navigation">
+            <nav>
+                <ul id="main-menu">
+                    <a href="index.html" class="main-menu-list"><li>Input</li></a>
+                    <a href="#" class="main-menu-list" onclick="output()"><li>Output</li></a>
+                    <button type="button" class="main-menu-list" onclick="printDIV()"><li>Print</li></button>
+                </ul>
+            </nav>
+        </div>
+
+<!-- for the input parameters -->
+<div id = "input-section">
+        <div id="input-paramters">
+            <nav class="nav flex-column">
+                <a class="nav-link" href="#" onclick="jointData();">Joint Data <hr> </a> 
+                <a class="nav-link" href="#" onclick="materialData();">Material Property <hr></a> 
+                <a class="nav-link" href="#" onclick="areaData();">Cross-sectional Data <hr></a>
+                <a class="nav-link" href="#" onclick="memberData();">Member Data <hr></a>
+                <a class="nav-link" href="#" onclick="loadData();">Load Data <hr></a>
+               
+            </nav>
+
+        </div>
+
+ <!-- For entering the total number of joints  -->
+        <div class="input-content">
+            Number of joints: <input type="text">
+            <button>Click</button>
+        </div>
+<!-- For entering the coordinates of the joints  -->
+        <div class="joint-data-input-table">
+            <h4>Enter the coordinates of each joints: </h4>
+            <table id="joint-input-table">
+                <thead>
+                    <td>Joint Number</td>
+                    <td>X-coordinate</td>
+                    <td>Y-coordinate</td>
+                    <td>X-restriction</td>
+                    <td>Y-restriction</td>
+                </thead>
+                <tbody id="joint-table-body">
+                    <tr id="joint-value">
+                        <td><input type="text" autofocus></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                  
+                </tbody>             
+            </table>
+            <div class="below-table-buttons">
+                <button class="btn btn-primary" id="submit-joint" onclick="jointSubmit(); supportSubmit()">Submit</button>
+                <img id="joint-plus-sign" src="add.png" onclick="addRows('joint-input-table','joint-value')">
+            </div>
+        </div>
+
+<!-- For entering the material properties  -->
+        <div class=" material-data-input-table">
+            <h4>Enter the properties of materials of every distint members: </h4>
+            <table id="material-input-table">
+                <thead>
+                    <td>Material No.</td>
+                    <td>Modulus of Elasticity</td>
+                </thead>
+                <tbody id="material-table-body">
+                    <tr id="material-value">
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>                 
+                    </tr>
+                   
+                </tbody>
+               
+            </table>
+            <div class="below-table-buttons">
+                <button class="btn btn-primary" id="submit-joint" onclick="materialSubmit()">Submit</button>
+                <img id="joint-plus-sign" src="add.png" onclick="addRows('material-input-table','material-value')">
+            </div>
+        </div>
+<!-- For entering the cross-sectional area of the members  -->
+        <div class="area-data-input-table">
+            <h4>Enter the cross-sectional areas of every distinct members: </h4>
+            <table id="area-input-table">
+                <thead>
+                    <td>Member Type</td>
+                    <td>Cross-sectional area </td>
+                </thead>
+                <tbody id="area-table-body">
+                    <tr id="area-value">
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>                 
+                    </tr>
+
+                </tbody>
+                
+            </table>
+            <div class="below-table-buttons">
+                <button class="btn btn-primary" id="submit-joint" onclick="areaSubmit()">Submit</button>
+                <img id="joint-plus-sign" src="add.png" onclick="addRows('area-input-table','area-value')">
+            </div>
+        </div>
+<!-- For entering the data related to the members  -->
+        <div class="member-data-input-table">
+            <h4>Enter the restrictions for each joints [0 for no restriction and 1 for restriction]: </h4>
+            <table id="member-input-table">
+                <thead>
+                    <td>Member Number</td>
+                    <td>Starting Joint</td>
+                    <td>Ending Joint</td>
+                    <td>Material Type</td>
+                    <td>Member Type</td>
+                </thead>
+                <tbody id="member-table-body">
+                    <tr id="member-value">
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    
+
+                </tbody>
+               
+            </table>
+            <div class="below-table-buttons">
+                <button class="btn btn-primary" id="submit-joint" onclick="memberSubmit()">Submit</button>
+                <img id="joint-plus-sign" src="add.png" onclick="addRows('member-input-table','member-value')">
+            </div>
+        </div>
+<!-- For entering the load acting on the joints  -->
+        <div class="load-data-input-table">
+            <h4>Enter the loads acting on the joints</h4>
+            <table id="load-input-table">
+                <thead>
+                    <td>Joint Number</td>
+                    <td>Force (X-direction)</td>
+                    <td>Force (Y-direction)</td>
+                </thead>
+                <tbody id="load-table-body">
+                    <tr id="load-value">
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>                 
+                    </tr>
+                   
+                </tbody>
+                
+            </table>
+            <div class="below-table-buttons">
+                <button class="btn btn-primary" id="submit-joint" onclick="loadSubmit(); loadVector()">Submit</button>
+                <img id="joint-plus-sign" src="add.png" onclick="addRows('load-input-table','load-value')">
+            </div>
+        </div>
+</div>
+
+<div id="output-section">
+<center>
+    <div id="displacement-output">
+        <h4>Joint Displacements</h4>
+        <table>
+            <thead>
+                <td>Joint Number</td>
+                <td>X-translation</td>
+                <td>Y-translation</td>
+            </thead>
+            <tbody id="output-displacement-body">
+                <!-- Value will be added from js program  -->
+            </tbody>
+        </table>
+    </div>
+    <div id="member-axial-force">
+        <h4>Member Axial Force</h4>
+        <table>
+            <thead>
+                <td>Member Number</td>
+                <td>Member Axial Force</td>
+                
+            </thead>
+            <tbody id="output-axial-body">
+                <!-- Value will be added from js program  -->
+            </tbody>
+        </table>
+       
+
+    </div>
+    <div id = "support-reaction">
+        <h4>Support Reaction</h4>
+        <table>
+            <thead>
+                <td>Joint Number</td>
+                <td>X-Force</td>
+                <td>Y-Force</td>
+            </thead>
+            <tbody id="output-reaction-body">
+                <!-- Value will be added from js program  -->
+            </tbody>
+        </table>
+    </div>
+</center>
+</div>
+
+       
+        <script src="input.js"></script>
+   
+        <footer>@ Copyright Albira Acharya 2020</footer>
+    </body>
+</html>
