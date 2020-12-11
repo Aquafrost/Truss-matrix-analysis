@@ -22,6 +22,7 @@ function jointData(){
     document.querySelector(".area-data-input-table").style.display = "none";
     document.querySelector(".member-data-input-table").style.display = "none";
     document.querySelector(".load-data-input-table").style.display = "none";
+    document.querySelector("#message").style.display = "none";
 };   
 function materialData(){
     document.querySelector(".input-content").style.display = "none";
@@ -30,6 +31,7 @@ function materialData(){
     document.querySelector(".area-data-input-table").style.display = "none";
     document.querySelector(".member-data-input-table").style.display = "none";
     document.querySelector(".load-data-input-table").style.display = "none";
+    document.querySelector("#message").style.display = "none";
 };
 function areaData(){
     document.querySelector(".input-content").style.display = "none";
@@ -38,6 +40,7 @@ function areaData(){
     document.querySelector(".area-data-input-table").style.display = "block";
     document.querySelector(".member-data-input-table").style.display = "none";
     document.querySelector(".load-data-input-table").style.display = "none";
+    document.querySelector("#message").style.display = "none";
 };
 function memberData(){
     document.querySelector(".input-content").style.display = "none";
@@ -46,6 +49,7 @@ function memberData(){
     document.querySelector(".area-data-input-table").style.display = "none";
     document.querySelector(".member-data-input-table").style.display = "block";
     document.querySelector(".load-data-input-table").style.display = "none";
+    document.querySelector("#message").style.display = "none";
 };
 function loadData(){
     document.querySelector(".input-content").style.display = "none";
@@ -54,6 +58,7 @@ function loadData(){
     document.querySelector(".area-data-input-table").style.display = "none";
     document.querySelector(".member-data-input-table").style.display = "none";
     document.querySelector(".load-data-input-table").style.display = "block";
+    document.querySelector("#message").style.display = "none";
 };
 
 // To add a row for every click on the plus sign 
@@ -67,8 +72,16 @@ function addRows(table, value){
 
 };
 
+// To remove any rows 
+function removeRows(){
+    let remove_content = event.target;
+    remove_content.parentElement.parentElement.remove();
+};
+
+
 // Submitting joint matrix  
 function jointSubmit(){
+
    var jointNum = document.getElementById("joint-table-body");
    var jointMatrix = [];
    
@@ -128,6 +141,7 @@ function non_supportSubmit(){
     
 };
 
+// Submitting material matrix 
 function materialSubmit(){
     var materialNum = document.getElementById("material-table-body")
     var material_matrix = [];
@@ -144,6 +158,7 @@ function materialSubmit(){
     return(material_matrix);
 };
 
+// Submitting area matrix 
 function areaSubmit(){
     var areaNum = document.getElementById("area-table-body")
     var area_matrix = [];
@@ -160,6 +175,7 @@ function areaSubmit(){
     return(area_matrix);
 };
 
+// Submitting load matrix 
 function loadSubmit(){
     var loadNum = document.getElementById("load-table-body")
     var load_matrix = [];
@@ -176,6 +192,7 @@ function loadSubmit(){
     return(load_matrix);
 };
 
+// submitting member matrix 
 function memberSubmit(){
     var memberNum = document.getElementById("member-table-body")
     var member_matrix = [];
@@ -192,6 +209,11 @@ function memberSubmit(){
 };
 
 
+function success_message(table){
+    document.getElementById(table).insertAdjacentHTML("afterEnd", `<div id="message" class="alert alert-success" role="alert" style="width: 30%; float: right; margin-right: 200px; margin-top: 20px">
+                                                    Data Submitted.
+                                            </div>`);
+};
 // Calculation the number of degree of freedom 
 function NDOF(){
     var support_matrix = supportSubmit();
@@ -630,17 +652,34 @@ function output(){
     };
 
     
+    
 };
 
+// printing function 
 function printDIV(){
-    // var divContent = document.getElementById("output-section").innerHTML;
-    // var a = window.open(); 
-    // a.document.write('<html>'); 
-    // a.document.write('<body > <h1>This is the result<br>'); 
-    // a.document.write(divContent); 
-    // a.document.write('</body></html>'); 
-    // a.document.close(); 
-    // a.print(); 
+    
+    var jointmatrix = jointSubmit();
+    var materialmatrix = materialSubmit();
+    var areamatrix = areaSubmit();
+    var membermatrix = memberSubmit();
+    var ndof = NDOF();
+
+    
+    document.querySelector("#input-section").style.display = "none";
+    document.querySelector("#output-section").style.display = "none";
+    document.getElementById("input-details").innerHTML = 
+    `<h1> General Structural Data </h1>
+    <p><b>Structure Type:</b> Plane Truss </p>
+    <p><b>Number of joints:</b> ${jointmatrix.length} </p>
+    <p><b>Number of members:</b> ${membermatrix.length} </p>
+    <p><b>Number of material sets:</b> ${materialmatrix.length} </p>
+    <p><b>Number of cross-sectional area sets:</b> ${areamatrix.length} </p>
+    <p><b>Number of degree of freedom:</b> ${ndof}</p>` ;
+
+    document.querySelector("#input-section").style.display = "none";
+    document.querySelector("#output-section").style.display = "none";
+
+    
 
     var printContents = document.getElementById("output-section").innerHTML;
     var originalContents = document.body.innerHTML;

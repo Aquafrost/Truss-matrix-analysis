@@ -64,21 +64,44 @@
                         <td><input type="text" autofocus></td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="0"></td>
+                        <td>
+                            <select name="support-restriction" id="support-restriction">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                           
+                        </td>
+                        <td class="inline-this">
+                            <select name="support-restriction" id="support-restriction">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                             </select>
+                             <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>
                     </tr>
                     <tr>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="0"></td>
+                        <td>
+                            <select name="support-restriction" id="support-restriction">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                         </td>
+                        <td>
+                            <select name="support-restriction" id="support-restriction">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                            <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>
                     </tr>
                   
                 </tbody>             
             </table>
             <div class="below-table-buttons">
-                <button class="btn btn-primary" id="submit-joint" onclick="jointSubmit(); supportSubmit()">Submit</button>
+                <button class="btn btn-primary" id="submit-joint" onclick="jointSubmit(); supportSubmit(); success_message('joint-input-table')">Submit</button>
                 <img id="joint-plus-sign" src="add.png" onclick="addRows('joint-input-table','joint-value')">
             </div>
         </div>
@@ -94,14 +117,16 @@
                 <tbody id="material-table-body">
                     <tr id="material-value">
                         <td><input type="text"></td>
-                        <td><input type="text"></td>                 
+                        <td><input type="text">
+                        <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>                 
                     </tr>
                    
                 </tbody>
                
             </table>
             <div class="below-table-buttons">
-                <button class="btn btn-primary" id="submit-joint" onclick="materialSubmit()">Submit</button>
+                <button class="btn btn-primary" id="submit-joint" onclick="materialSubmit(); success_message('material-input-table')">Submit</button>
                 <img id="joint-plus-sign" src="add.png" onclick="addRows('material-input-table','material-value')">
             </div>
         </div>
@@ -116,14 +141,16 @@
                 <tbody id="area-table-body">
                     <tr id="area-value">
                         <td><input type="text"></td>
-                        <td><input type="text"></td>                 
+                        <td><input type="text">
+                        <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>                 
                     </tr>
 
                 </tbody>
                 
             </table>
             <div class="below-table-buttons">
-                <button class="btn btn-primary" id="submit-joint" onclick="areaSubmit()">Submit</button>
+                <button class="btn btn-primary" id="submit-joint" onclick="areaSubmit(); success_message('area-input-table')">Submit</button>
                 <img id="joint-plus-sign" src="add.png" onclick="addRows('area-input-table','area-value')">
             </div>
         </div>
@@ -144,7 +171,9 @@
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text"></td>
+                        <td><input type="text">
+                            <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>
                     </tr>
                     
 
@@ -152,7 +181,7 @@
                
             </table>
             <div class="below-table-buttons">
-                <button class="btn btn-primary" id="submit-joint" onclick="memberSubmit()">Submit</button>
+                <button class="btn btn-primary" id="submit-joint" onclick="memberSubmit(); success_message('member-input-table')">Submit</button>
                 <img id="joint-plus-sign" src="add.png" onclick="addRows('member-input-table','member-value')">
             </div>
         </div>
@@ -169,20 +198,28 @@
                     <tr id="load-value">
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text"></td>                 
+                        <td><input type="text">
+                            <a id="remove" href="#" onclick = "removeRows()" style="color: red; font-weight: 50;">X</a>
+                        </td>                 
                     </tr>
                    
                 </tbody>
                 
             </table>
             <div class="below-table-buttons">
-                <button class="btn btn-primary" id="submit-joint" onclick="loadSubmit(); loadVector()">Submit</button>
+                <button class="btn btn-primary" id="submit-joint" onclick="loadSubmit(); loadVector(); success_message('load-input-table')">Submit</button>
                 <img id="joint-plus-sign" src="add.png" onclick="addRows('load-input-table','load-value')">
             </div>
         </div>
 </div>
 
+
+
+
 <div id="output-section">
+    <div id="input-details">
+
+    </div>
 <center>
     <div id="displacement-output">
         <h4>Joint Displacements</h4>
